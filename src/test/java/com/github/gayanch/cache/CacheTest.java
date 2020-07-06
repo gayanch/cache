@@ -39,4 +39,26 @@ public class CacheTest {
         cache.put("k8", "v8");
     }
 
+    @Test
+    public void testEvictionBehavior() {
+        Cache<Integer, String> cache = new CacheBuilder<Integer, String>()
+                .addCache(new CacheConfig("Level1", 2, EvictionStrategy.LFU, StorageStrategy.IN_MEMORY))
+                .addCache(new CacheConfig("Level2", 3, EvictionStrategy.LRU, StorageStrategy.FILE_SYSTEM))
+                .build();
+
+        cache.put(10, "ten");
+        cache.put(20, "twenty"); //level 1 cache is full
+        cache.put(30, "thirty");
+        cache.put(40, "forty");
+        cache.put(50, "fifty"); //all caches are full
+
+        Assertions.assertNotNull(cache.get(10));
+        Assertions.assertNotNull(cache.get(10));
+        Assertions.assertNotNull(cache.get(30));    //least recently used entry is (20 -> "twenty")
+
+        cache.put(60, "sixty"); //(20 -> "twenty") will be discarded from the cache since all caches are full
+
+        Assertions.assertNull(cache.get(20));
+    }
+
 }

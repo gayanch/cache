@@ -10,12 +10,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Util class to handle file system based operations
+ */
 public class FileSystemUtils {
     private static final Logger log = LoggerFactory.getLogger(FileSystemUtils.class);
 
     private static final String STORAGE_PATH =
             Paths.get(System.getProperty("java.io.tmpdir"), "cache-storage/").toString();
 
+    /**
+     * Saves the given content in a file on STORAGE_PATH/pathPrefix/fileName
+     * @param pathPrefix The path prefix to save the file
+     * @param fileName The file name which the content will be saved
+     * @param content The content of the file
+     */
     public static void saveToFile(String pathPrefix, String fileName, Object content) {
         String filePath = Paths.get(STORAGE_PATH, pathPrefix, fileName).toString();
         createPathsIfNotExist(pathPrefix);
@@ -30,6 +39,12 @@ public class FileSystemUtils {
         }
     }
 
+    /**
+     * Read the content of file from STORAGE_PATH/pathPrefix/fileName
+     * @param pathPrefix The pathPrefix
+     * @param fileName The file name to read
+     * @return Content of the file. Null if not found.
+     */
     public static Object readFile(String pathPrefix, String fileName) {
         String filePath = Paths.get(STORAGE_PATH, pathPrefix, fileName).toString();
         log.debug("Reading from: {}" , filePath);
@@ -43,6 +58,12 @@ public class FileSystemUtils {
         return null;
     }
 
+    /**
+     * Removes the file in STORAGE_PATH/pathPrefix/fileName
+     * @param pathPrefix The pathPrefix
+     * @param fileName The name of the file to remove
+     * @return Content of the file, Null if not found
+     */
     public static Object removeFile(String pathPrefix, String fileName) {
         String filePath = Paths.get(STORAGE_PATH, pathPrefix, fileName).toString();
 
@@ -57,6 +78,11 @@ public class FileSystemUtils {
         return removedObject;
     }
 
+    /**
+     * Get the file count in a given prefix location: STORAGE_PATH/pathPrefix
+     * @param pathPrefix The path prefix
+     * @return File count in STORAGE_PATH/pathPrefix
+     */
     public static int getFileCountForPrefix(String pathPrefix) {
         String path = Paths.get(STORAGE_PATH, pathPrefix).toString();
         File directory = new File(path);
@@ -68,6 +94,11 @@ public class FileSystemUtils {
         return fileCount;
     }
 
+    /**
+     * Read all files in STORAGE_PATH/pathPrefix
+     * @param pathPrefix The path prefix
+     * @return List of file contents
+     */
     public static List<Object> readAllValuesForPrefix(String pathPrefix) {
         String path = Paths.get(STORAGE_PATH, pathPrefix).toString();
         File directory = new File(path);
@@ -79,6 +110,10 @@ public class FileSystemUtils {
         return null;
     }
 
+    /**
+     * Creates a directory STORAGE_PATH/pathPrefix
+     * @param pathPrefix The path prefix
+     */
     private static void createPathsIfNotExist(String pathPrefix) {
         String path = Paths.get(STORAGE_PATH, pathPrefix).toString();
         File directory = new File(path);

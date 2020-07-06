@@ -3,6 +3,9 @@ package com.github.gayanch.cache.config;
 import com.github.gayanch.cache.strategy.EvictionStrategy;
 import com.github.gayanch.cache.strategy.StorageStrategy;
 
+/**
+ * Config class to be used when creating multi-level caches using {@link com.github.gayanch.cache.CacheBuilder}
+ */
 public class CacheConfig {
     private String cacheName;
     private int maxSize;

@@ -86,6 +86,7 @@ public class CacheImpl<K, V> implements Cache<K, V> {
         } catch (StorageFullException e) {
             log.error("{} cache is full. Starting eviction...", name);
             K evictionKey = stateListener.evict();
+            System.out.println("Eviction Key: " + evictionKey);
             V evictedValue = remove(evictionKey);
             log.info("Evicted [{} -> {}] from {} cache.", evictionKey, evictedValue, name);
             put(key, value);
@@ -101,6 +102,7 @@ public class CacheImpl<K, V> implements Cache<K, V> {
 
     @Override
     public V remove(K key) {
+        System.out.println("Remove: " + key);
         stateListener.update(CacheEvent.REMOVE, key);
         return storage.remove(key);
     }

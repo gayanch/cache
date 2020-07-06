@@ -14,14 +14,16 @@ import java.util.UUID;
  */
 public class FileSystemStorage<K, V> implements Storage<K, V> {
     private int maxSize;
-    private static final String STORAGE_PREFIX = UUID.randomUUID().toString();
+    private final String STORAGE_PREFIX;
 
     public FileSystemStorage(int maxSize) {
         this.maxSize = maxSize;
+        STORAGE_PREFIX = UUID.randomUUID().toString();
     }
 
     @Override
     public void store(K key, V value) throws StorageFullException {
+        System.out.println("Strore FS: (" + key + "->" + value + ")" );
         if (size() >= maxSize) {
             throw new StorageFullException("Storage is full");
         }

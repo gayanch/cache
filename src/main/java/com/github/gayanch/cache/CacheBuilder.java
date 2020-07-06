@@ -9,6 +9,11 @@ import com.github.gayanch.cache.strategy.StorageStrategy;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Builder class to create multi-level caches. This is the only supported mechanism for creating cache instances.
+ * @param <K> The type of CacheKey
+ * @param <V> The type of CacheValue
+ */
 public class CacheBuilder<K, V> {
     private List<CacheConfig> configList = new LinkedList<>();
 
