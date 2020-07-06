@@ -9,6 +9,14 @@ Multi-level cache implementation in Java
 `mvn clean install`
 
 ## How to Use
+## Add Maven Dependency
+```xml
+<dependency>
+    <groupId>com.github.gayanch</groupId>
+    <artifactId>cache</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 ## Initialize a cache
 Initialize a multi-level cache using CacheBuilder
 ```java
@@ -24,7 +32,7 @@ Cache<Integer, String> cache = new CacheBuilder<Integer, String>()
     .addCache(new CacheConfig("Level2", 3, EvictionStrategy.LRU, StorageStrategy.FILE_SYSTEM))
     .build();
 ```
-
+For more information refer java-docs available in docs/ directory
 ## Eviction Strategies
 Eviction Strategy defines which item to evict from cache when cache is full. 
 Eviction strategies are defined in `com.github.gayanch.cache.strategy.EvictionStrategy` enum. Following strategies are supported by default,
